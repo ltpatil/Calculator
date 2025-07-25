@@ -13,43 +13,39 @@ app.get('/', (req, res) => {
 `);
 });
 
-app.get('/add', (req, res) => {
+function checkInputs(req, res, next) {
     const { a, b } = req.query;
     if (a === undefined || b === undefined) {
         return res.status(400).send('Please provide both a and b query parameters');
     }
-    const sum = parseFloat(a) + parseFloat(b);
-    res.send(`The sum of ${a} and ${b} is ${sum}`);
+    const aNum = parseFloat(a);
+    const bNum = parseFloat(b);
+    if (isNaN(aNum) || isNaN(bNum)) {
+        return res.status(400).send('Both a and b must be valid numbers');
+    }
+    req.a = aNum;
+    req.b = bNum;
+    next();
+}
+app.use(checkInputs);
+
+app.get('/add', (req, res) => {
+    res.send(`The sum of ${req.a} and ${req.b} is ${req.a + req.b}`);
 });
 
 app.get('/subtract', (req, res) => {
-    const { a, b } = req.query;
-    if (a === undefined || b === undefined) {
-        return res.status(400).send('Please provide both a and b query parameters');
-    }
-    const difference = parseFloat(a) - parseFloat(b);
-    res.send(`The difference between ${a} and ${b} is ${difference}`);
+    res.send(`The difference between ${req.a} and ${req.b} is ${req.a - req.b}`);
 });
 
 app.get('/multiply', (req, res) => {
-    const { a, b } = req.query;
-    if (a === undefined || b === undefined) {
-        return res.status(400).send('Please provide both a and b query parameters');
-    }
-    const product = parseFloat(a) * parseFloat(b);
-    res.send(`The product of ${a} and ${b} is ${product}`);
+    res.send(`The product of ${req.a} and ${req.b} is ${req.a * req.b}`);
 }); 
 
 app.get('/divide', (req, res) => {
-    const { a, b } = req.query;
-    if (a === undefined || b === undefined) {
-        return res.status(400).send('Please provide both a and b query parameters');
-    }
-    if (parseFloat(b) === 0) {
+    if (req.b === 0) {
         return res.status(400).send('Division by zero is not allowed');
     }
-    const quotient = parseFloat(a) / parseFloat(b);
-    res.send(`The quotient of ${a} divided by ${b} is ${quotient}`);
+    res.send(`The quotient of ${req.a} and ${req.b} is ${req.a / req.b}`);
 }); 
 
 app.listen(3000);
