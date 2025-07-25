@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 app.get('/', (req, res) => {
     res.send(`
@@ -28,9 +29,10 @@ function checkInputs(req, res, next) {
     next();
 }
 app.use(checkInputs);
-
+app.use(cors())
 app.get('/add', (req, res) => {
     res.send(`The sum of ${req.a} and ${req.b} is ${req.a + req.b}`);
+    
 });
 
 app.get('/subtract', (req, res) => {

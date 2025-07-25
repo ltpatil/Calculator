@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Calculator</title>
+
+
+    <script>
+        function calculateSum(){
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+            axios.get('http://localhost:3000/add?a=' + a + '&b=' + b);
+        }
+        function calculateDifference(){
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+            axios.get('http://localhost:3000/subtract?a=' + a + '&b=' + b);
+        }
+        function calculateProduct(){
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+            axios.get('http://localhost:3000/multiply?a=' + a + '&b=' + b);
+        }
+        function calculateDivision(){
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+            axios.get('http://localhost:3000/divide?a=' + a + '&b=' + b);
+        }
+    </script>
+
+</head>
+<body>
+    <h1>Welcome to My Calculator</h1>
+    <p>This is a simple calculator application for response you gotta check response in dev tools.</p>
+        <input type="text" id="a" placeholder="Enter first number" required><br><br>
+        <input type="text" id="b" placeholder="Enter second number" required><br><br>
+        <button type="button" onclick="calculateSum()">CalculateSum</button>
+        <button type="button" onclick="calculateDifference()">CalculateDifference</button><br><br>
+        <button type="button" onclick="calculateProduct()">CalculateProduct</button>
+        <button type="button" onclick="calculateDivision()">CalculateDivision</button><br><br>
+
+</body>
+</html>
